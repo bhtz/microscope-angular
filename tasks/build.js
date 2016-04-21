@@ -5,6 +5,8 @@ var source      = require('vinyl-source-stream');
 var uglify      = require('gulp-uglify');
 var buffer      = require('vinyl-buffer');
 var runSequence = require('run-sequence');
+var watchify    = require('watchify');
+var gutil       = require('gulp-util');
 
 // build project
 gulp.task('build', function (cb) {
@@ -27,6 +29,29 @@ gulp.task('browserify', function(){
         .pipe(gulp.dest('./www/'));
 });
 
+gulp.task('watchify',function(){
+    var b;
+    function bundle() {
+        gutil.log('Starting \'' + gutil.colors.cyan('browserify incremental') + '\'...');
+        return b.bundle()
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest('./www/'));
+    }
+
+    b = browserify('./src/app.js', {
+             debug: true,
+             cache: {}, packageCache: {}
+    })
+    .plugin(watchify)
+    .on('update', bundle)
+    .on('time', function(msg){
+        gutil.log('Finished \'' + gutil.colors.cyan('browserify incremental') + '\' after ' + gutil.colors.magenta(msg + "ms"));
+    });
+
+    return bundle();
+
+});
+
 // build:release
 gulp.task('browserify:release', function(){
 	
@@ -40,9 +65,8 @@ gulp.task('browserify:release', function(){
 });
 
 // watch files and run appropriate tasks
-gulp.task('watch', function () {
+gulp.task('watch', [ 'watchify'] , function () {
     gulp.watch(['./assets/**'], ['assets']);
-    gulp.watch(['./src/**/*.js'], ['browserify']);
     gulp.watch(['./src/**/*.html'], ['templates']);
 });
 
