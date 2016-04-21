@@ -20,5 +20,5 @@ gulp.task('open', function(){
 
 // serve task => build & connect
 gulp.task('serve', function (cb) {
-	runSequence('clean', 'assets', 'templates', 'browserify', 'watch', 'connect', 'open',cb);
+	runSequence('clean', 'assets', 'templates','watch', 'connect', 'open',cb);
 });
