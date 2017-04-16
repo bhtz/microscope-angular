@@ -1,6 +1,8 @@
 microscope-angular
 ==================
 
+[![Join the chat at https://gitter.im/bhtz/microscope-angular](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bhtz/microscope-angular?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 AngularJS (CommonJS/ Browserify) starter kit.
 
 [![Build Status](https://travis-ci.org/microscope-frontend/microscope-angular.svg?branch=master)](https://travis-ci.org/microscope-frontend/microscope-angular)
